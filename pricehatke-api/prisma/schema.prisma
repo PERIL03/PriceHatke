@@ -1,0 +1,138 @@
+// PriceHatke — Prisma Schema
+// Full data model per PRD Section 8.5
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String           @id @default(uuid())
+  email          String           @unique
+  passwordHash   String?
+  name           String?
+  provider       String           @default("credentials")
+  referralCode   String           @unique
+  createdAt      DateTime         @default(now())
+  trackedProducts TrackedProduct[]
+  alerts         Alert[]
+  giftCardOrders GiftCardOrder[]
+}
+
+model Product {
+  id             String           @id @default(uuid())
+  canonicalTitle String
+  category       String?
+  imageUrl       String?
+  createdAt      DateTime         @default(now())
+  storeListings  StoreListing[]
+  trackedBy      TrackedProduct[]
+  alerts         Alert[]
+}
+
+model StoreListing {
+  id             String           @id @default(uuid())
+  productId      String
+  product        Product          @relation(fields: [productId], references: [id])
+  store          String           // amazon | flipkart | myntra | ajio | meesho | nykaa | tatacliq
+  storeUrl       String
+  storeProductId String
+  priceSnapshots PriceSnapshot[]
+
+  @@index([productId])
+  @@index([store])
+  @@index([storeProductId])
+}
+
+model PriceSnapshot {
+  id             String       @id @default(uuid())
+  storeListingId String
+  storeListing   StoreListing @relation(fields: [storeListingId], references: [id])
+  price          Decimal
+  mrp            Decimal?
+  capturedAt     DateTime     @default(now())
+
+  @@index([storeListingId])
+  @@index([capturedAt])
+}
+
+model TrackedProduct {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+  @@index([userId])
+}
+
+model Alert {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  targetPrice Decimal?
+  status      String   @default("active") // active | triggered | expired
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([productId])
+  @@index([status])
+}
+
+model Deal {
+  id              String   @id @default(uuid())
+  title           String
+  imageUrl        String?
+  store           String
+  storeUrl        String?
+  price           Decimal
+  mrp             Decimal?
+  discountPct     Int
+  category        String?
+  verified        Boolean  @default(false)
+  popularityScore Int      @default(0)
+  createdAt       DateTime @default(now())
+
+  @@index([store])
+  @@index([category])
+  @@index([discountPct])
+}
+
+model GiftCardBrand {
+  id            String                 @id @default(uuid())
+  name          String
+  slug          String                 @unique
+  logoUrl       String?
+  denominations GiftCardDenomination[]
+}
+
+model GiftCardDenomination {
+  id          String        @id @default(uuid())
+  brandId     String
+  brand       GiftCardBrand @relation(fields: [brandId], references: [id])
+  faceValue   Decimal
+  sellPrice   Decimal
+  discountPct Int
+
+  @@index([brandId])
+}
+
+model GiftCardOrder {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  denominationId String
+  amount         Decimal
+  status         String   @default("pending") // pending | paid | fulfilled | failed
+  createdAt      DateTime @default(now())
+
+  @@index([userId])
+}
+

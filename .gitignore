@@ -1,0 +1,32 @@
+# Node & Build artifacts
+node_modules/
+dist/
+.next/
+out/
+build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Agent & Brain metadata
+.agents/
+.claude/
+.windsurf/
+.antigravityignore
+skills-lock.json
+DECISIONS.md

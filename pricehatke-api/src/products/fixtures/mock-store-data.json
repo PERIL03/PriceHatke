@@ -1,0 +1,59 @@
+{
+  "amazon": [
+    {
+      "storeProductId": "AMAZON-1001",
+      "urlKeyword": "iphone-15",
+      "title": "Apple iPhone 15 (128 GB) - Blue",
+      "category": "Electronics",
+      "imageUrl": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&auto=format&fit=crop",
+      "currentPrice": 69900,
+      "mrp": 79900
+    },
+    {
+      "storeProductId": "AMAZON-1003",
+      "urlKeyword": "macbook-air-m3",
+      "title": "Apple MacBook Air M3 Chip (13.6 inch, 8GB, 256GB SSD) - Starlight",
+      "category": "Laptops",
+      "imageUrl": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop",
+      "currentPrice": 99900,
+      "mrp": 114900
+    },
+    {
+      "storeProductId": "AMAZON-1004",
+      "urlKeyword": "sony-wh-1000xm5",
+      "title": "Sony WH-1000XM5 Wireless Noise Cancelling Headphones - Black",
+      "category": "Audio",
+      "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop",
+      "currentPrice": 26990,
+      "mrp": 34990
+    }
+  ],
+  "flipkart": [
+    {
+      "storeProductId": "FLIPKART-2001",
+      "urlKeyword": "samsung-s24-ultra",
+      "title": "Samsung Galaxy S24 Ultra 5G (Titanium Gray, 12GB, 256GB)",
+      "category": "Electronics",
+      "imageUrl": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&auto=format&fit=crop",
+      "currentPrice": 127999,
+      "mrp": 139999
+    },
+    {
+      "storeProductId": "FLIPKART-2002",
+      "urlKeyword": "iphone-15",
+      "title": "Apple iPhone 15 (128 GB) - Blue",
+      "category": "Electronics",
+      "imageUrl": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&auto=format&fit=crop",
+      "currentPrice": 68999,
+      "mrp": 79900
+    }
+  ],
+  "generic": {
+    "storeProductId": "GENERIC-9001",
+    "title": "Sample Online Store Product Item",
+    "category": "General",
+    "imageUrl": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop",
+    "currentPrice": 4999,
+    "mrp": 7999
+  }
+}
