@@ -11,6 +11,9 @@ import { AlertsModule } from './alerts/alerts.module';
 import { DealsModule } from './deals/deals.module';
 import { NotificationsModule } from './notifications/notifications.module';
 
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -47,8 +50,9 @@ import { NotificationsModule } from './notifications/notifications.module';
     DealsModule,
     NotificationsModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
+    AppService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
