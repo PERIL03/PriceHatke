@@ -19,6 +19,9 @@ COPY . .
 RUN npx prisma generate
 RUN npm run build
 
+# Prune devDependencies for lightweight production runner
+RUN npm prune --production
+
 # Stage 2: Production runner stage
 FROM node:22-alpine AS runner
 WORKDIR /app
@@ -26,18 +29,15 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=8080
 
-# Copy package descriptors
+# Copy package descriptors, prisma configuration, and tsconfig
 COPY package*.json ./
 COPY prisma ./prisma/
 COPY prisma.config.ts ./
+COPY tsconfig.json ./
 
-# Install production dependencies only
-RUN npm ci --only=production
-
-# Copy compiled dist and generated Prisma client from builder
+# Copy pruned node_modules and compiled dist from builder
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
 EXPOSE 8080
 
